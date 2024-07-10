@@ -17,13 +17,19 @@ public class SelenideRepositorySearchTest {
     }
 
     @Test
-    void  shouldJUnitCode(){
+    void  shouldJUnitCodeTest(){
         open("/selenide/selenide");
         $("#repository-container-header").$("#wiki-tab").click();
         $("#wiki-wrapper").$(byText("Soft assertions")).click();
-        //$$(".markdown-heading").findBy(text("JUnit5")); // в начале сделала таким способом, потом подсматрела в чате телеги и переделала
-        $("a#user-content-3-using-junit5-extend-test-class")
-                .shouldHave(href("#3-using-junit5-extend-test-class"))
-                .scrollIntoView(true);
+        /*$("a#user-content-3-using-junit5-extend-test-class")
+               .shouldHave(href("#3-using-junit5-extend-test-class"))*/
+        $("#wiki-body").shouldHave(text("@ExtendWith({SoftAssertsExtension.class})\n" +
+                "class Tests {\n" +
+                "@Test\n" +
+                "void test() {\n" +
+                "Configuration.assertionMode = SOFT;\n" +
+                "open(\"page.html\");\n" +
+                "$(\"#first\").should(visible).click();\n" +
+                "$(\"#second\").should(visible).click();\n"));
     }
 }
